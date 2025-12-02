@@ -1,0 +1,72 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(145deg, #e3e7ea, #d2d6da);
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+.seccion {
+  background: #ffffff;
+  width: 340px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.seccion:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  background: #f6f6f6;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76,175,80,0.4);
+  outline: none;
+  background: white;
+}
+
+button {
+  width: 95%;
+  padding: 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 15px;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+button:hover {
+  background: #43a047;
+  transform: scale(1.03);
+}
+
+a {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #4CAF50;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #2e7d32;
+  text-decoration: underline;
+}

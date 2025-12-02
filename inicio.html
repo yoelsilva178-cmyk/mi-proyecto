@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="body1">
+
+  <div class="seccion">
+    <h2>Iniciar sesión</h2>
+
+    <input id="usuario" placeholder="Usuario">
+    <input id="contraseña" type="password" placeholder="Contraseña">
+
+    <button onclick="logear()">Entrar</button>
+    <p id="mensaje"></p>
+  </div>
+
+  <script>
+    function logear() {
+      const usuario = document.getElementById("usuario").value.trim();
+      const contraseña = document.getElementById("contraseña").value.trim();
+      const mensaje = document.getElementById("mensaje");
+
+      const guardado = JSON.parse(localStorage.getItem("usuarioRegistrado"));
+
+      // No existe usuario registrado
+      if (!guardado) {
+        mensaje.textContent = " Aún no hay nadie registrado.";
+        mensaje.style.color = "orange";
+        return;
+      }
+
+      // Validación de datos
+      if (usuario === guardado.usuario && contraseña === guardado.contraseña) {
+        mensaje.textContent = "Iniciando sesión...";
+        mensaje.style.color = "green";
+
+        localStorage.setItem("logueado", "true");
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 800);
+
+      } else {
+        mensaje.textContent = " Usuario o contraseña incorrectos";
+        mensaje.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>

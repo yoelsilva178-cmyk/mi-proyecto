@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi Página prfeional</title>
+</head>
+<body>
+
+  <h2>¡Bienvenido/a!</h2>
+
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+  <h3>Mini Juego Snake</h3>
+  <canvas id="snakeCanvas" width="400" height="400"></canvas>
+
+  <h3>Dato random + gatito</h3>
+
+  <div class="card">
+    <img src="https://placekitten.com/200/200" alt="gatito tierno">
+    <p id="dato">Cargando frase épica...</p>
+  </div>
+
+
+  <script>
+
+    // Si no está logueado, lo mandamos a inicio
+    if (localStorage.getItem("logueado") !== "true") {
+      window.location.href = "inicio.html";
+    }
+
+    // Frase random estilo Chuck Norris pero con onda
+    fetch("https://api.chucknorris.io/jokes/random")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("dato").textContent = data.value;
+
+      });
+
+    function cerrarSesion() {
+      localStorage.setItem("logueado", "false");
+      window.location.href = "inicio.html";
+    }
+
+  
+
+    const canvas = document.getElementById("snakeCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const tamaño = 20;
+const inicioX = Math.floor((canvas.width / tamaño) / 2) * tamaño;
+const inicioY = Math.floor((canvas.height / tamaño) / 2) * tamaño;
+
+let snake = [{ x: inicioX, y: inicioY }];
+let dx = 0;
+let dy = 0; // que NO se mueva hasta tocar una flecha
+
+
+    document.addEventListener("keydown", cambiarDireccion);
+
+    function cambiarDireccion(e) {
+      if (e.key === "ArrowUp" && dy === 0) { dx = 0; dy = -tamaño; }
+      if (e.key === "ArrowDown" && dy === 0) { dx = 0; dy = tamaño; }
+      if (e.key === "ArrowLeft" && dx === 0) { dx = -tamaño; dy = 0; }
+      if (e.key === "ArrowRight" && dx === 0) { dx = tamaño; dy = 0; }
+    }
+
+    function generarComida() {
+      return {
+        x: Math.floor(Math.random() * (canvas.width / tamaño)) * tamaño,
+        y: Math.floor(Math.random() * (canvas.height / tamaño)) * tamaño
+      };
+    }
+
+    function actualizar() {
+      const cabeza = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+      // Si choca contra la pared pierde
+      if (
+        cabeza.x < 0 || cabeza.x >= canvas.width ||
+        cabeza.y < 0 || cabeza.y >= canvas.height
+      ) {
+        alert(" ¡Perdiste! Pero tranqui, podés intentarlo otra vez.");
+        document.location.reload();
+      }
+
+      snake.unshift(cabeza);
+
+      // Si come la comida crece
+      if (cabeza.x === comida.x && cabeza.y === comida.y) {
+        comida = generarComida();
+      } else {
+        snake.pop();
+      }
+
+      dibujar();
+    }
+
+    function dibujar() {
+      // Fondo
+      ctx.fillStyle = "#111";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Snake
+      ctx.fillStyle = "#32CD32";
+      snake.forEach(parte => {
+        ctx.fillRect(parte.x, parte.y, tamaño, tamaño);
+      });
+
+      // Comida
+      ctx.fillStyle = "#FF3333";
+      ctx.fillRect(comida.x, comida.y, tamaño, tamaño);
+    }
+
+    setInterval(actualizar, 120);
+
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2, h3 {
+      color: #444;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 25px;
+      background: #ff4d4d;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      margin: 10px;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #cc0000;
+    }
+
+    #snakeCanvas {
+      background: #111;
+      margin-top: 20px;
+      border: 3px solid #32CD32;
+      border-radius: 4px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      width: 300px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    img {
+      width: 200px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    #dato {
+      font-size: 15px;
+      font-style: italic;
+      color: #333;
+    }
+
+  </style>
+
+</body>
+</html>
