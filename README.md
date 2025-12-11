@@ -8,4 +8,4 @@ Si coinciden, lo deja pasar y lo manda a la página principal. Si están mal, mu
 
 Página principal con el juego 
 
-La página principal solo se abre si el usuario está logueado. Tiene un botón para cerrar sesión, un minijuego Snake y un dato random con un gatito. El Snake se controla con las flechas y si chocás aparece un mensaje de que perdiste. El botón de cerrar sesión borra el login y te manda al inicio.
+La página principal solo se abre si el usuario está logueado. Tiene un botón para cerrar sesión, un minijuego de serpiente y chistes sobre Chucky Norri. El Snake se controla con las flechas y si chocás aparece un mensaje de que perdiste. El botón de cerrar sesión borra el login y te manda al inicio.
